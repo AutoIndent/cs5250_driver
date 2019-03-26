@@ -57,7 +57,17 @@ ssize_t onebyte_write(struct file *filep, const char *buf,
 		size_t count, loff_t *f_pos)
 {
 	/*please complete the function on your own*/
-	return 0;
+	if (count == 0)
+	{
+		return 0; // nothing to write
+	}
+	copy_from_user(onebyte_data, buf, 1);
+	if (count > 1)
+	{
+		return -ENOSPC; // not allowed to write >1 byte
+	}
+
+	return 1;
 }
 
 static int onebyte_init(void)
